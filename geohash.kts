@@ -1,22 +1,20 @@
-val bitLength = 5
-val precision = 9
-val characterMap = charArrayOf (
+
+println(encode(42.6, -5.6, 9))
+
+fun encode(latitude: Double, longitude: Double, precision: Int): String {
+    val characterMap = charArrayOf (
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-)
-
-println(encode(42.6, -5.6))
-
-fun encode(latitude: Double, longitude: Double): String {
-    val latitudeBits = getBits(latitude, -90.0, 90.0)
-    val longitudeBits = getBits(longitude, -180.0, 180.0)
+    )
+    val latitudeBits = getBits(latitude, -90.0, 90.0, precision)
+    val longitudeBits = getBits(longitude, -180.0, 180.0, precision)
     val mixLists = longitudeBits.mapIndexed { i, b -> listOf(b, latitudeBits[i]) }.flatten()
     val chars = mixLists.batch(5).map { it.toBooleanArray().toInt() }.map { characterMap[it] }
     return String(chars.toCharArray())
 }
 
-fun getBits(value: Double, low: Double, high: Double): BooleanArray {
-    val length = (precision * bitLength) / 2
+fun getBits(value: Double, low: Double, high: Double, precision: Int): BooleanArray {
+    val length = (precision * 5) / 2
     var currentLow = low
     var currentHigh = high
     return (0..length - 1)
