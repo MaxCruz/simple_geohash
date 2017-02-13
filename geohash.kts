@@ -5,9 +5,7 @@ val characterMap = charArrayOf (
         'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 )
 
-fun main(args: Array<String>) {
-    println(encode(42.6, -5.6))
-}
+println(encode(42.6, -5.6))
 
 fun encode(latitude: Double, longitude: Double): String {
     val latitudeBits = getBits(latitude, -90.0, 90.0)
@@ -17,7 +15,7 @@ fun encode(latitude: Double, longitude: Double): String {
     return String(chars.toCharArray())
 }
 
-private fun getBits(value: Double, low: Double, high: Double): BooleanArray {
+fun getBits(value: Double, low: Double, high: Double): BooleanArray {
     val length = (precision * bitLength) / 2
     var currentLow = low
     var currentHigh = high
